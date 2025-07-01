@@ -101,6 +101,22 @@
     .download-btn:hover, .jump-btn:hover {
       transform: scale(1.1);
     }
+    @keyframes flyAndSpin {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(100px, -100px) rotate(720deg) scale(0.5);
+        opacity: 0;
+      }
+    }
+    .animate-fly {
+      position: fixed;
+      pointer-events: none;
+      animation: flyAndSpin 1s ease-out forwards;
+      z-index: 1000;
+    }
     @media (max-width: 480px) {
       .container {
         padding: 24px 16px;
@@ -163,11 +179,23 @@
       });
     });
     document.querySelectorAll('.jump-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const link = this.getAttribute('data-link');
-        if(link) {
-          window.open(link, '_blank');
-        }
+      btn.addEventListener('click', function(e) {
+        const icon = document.createElement('div');
+        icon.className = 'animate-fly';
+        const rect = this.getBoundingClientRect();
+        icon.style.width = rect.width + 'px';
+        icon.style.height = rect.height + 'px';
+        icon.style.background = window.getComputedStyle(this).background;
+        icon.style.left = rect.left + 'px';
+        icon.style.top = rect.top + 'px';
+        document.body.appendChild(icon);
+        icon.addEventListener('animationend', () => {
+          icon.remove();
+          const link = this.getAttribute('data-link');
+          if(link) {
+            window.open(link, '_blank');
+          }
+        });
       });
     });
   </script>
