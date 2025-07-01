@@ -11,25 +11,21 @@
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
       background-color: #1F2329;
       color: #FFFFFF;
       line-height: 1.6;
     }
-
     .container {
       max-width: 560px;
       margin: 0 auto;
       padding: 40px 20px;
     }
-
     .header {
       text-align: center;
       margin-bottom: 36px;
     }
-
     .header .logo {
       width: 64px;
       height: 64px;
@@ -40,25 +36,21 @@
       align-items: center;
       justify-content: center;
     }
-
     .header .logo svg {
       width: 32px;
       height: 32px;
       fill: #FFFFFF;
     }
-
     .header h1 {
       font-size: 28px;
       font-weight: 600;
       margin-bottom: 8px;
     }
-
     .header p {
       font-size: 14px;
       color: #CFD2D6;
       line-height: 1.4;
     }
-
     .card {
       background-color: #2B2F36;
       border-radius: 12px;
@@ -69,28 +61,23 @@
       align-items: center;
       transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-
     .card:hover {
       transform: translateY(-4px);
       background-color: #343A42;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     }
-
     .card .content {
       flex: 1;
     }
-
     .card h2 {
       font-size: 18px;
       font-weight: 600;
       margin-bottom: 8px;
     }
-
     .card p {
       font-size: 14px;
       color: #B0B3B8;
     }
-
     .download-btn {
       width: 36px;
       height: 36px;
@@ -101,31 +88,26 @@
       background-size: cover;
       transition: transform 0.2s;
     }
-
     .jump-btn {
       width: 36px;
       height: 36px;
       border: none;
       outline: none;
       cursor: pointer;
-      background: transparent url('跳转.pug') no-repeat center center;
+      background: transparent url('跳转.png') no-repeat center center;
       background-size: cover;
       transition: transform 0.2s;
     }
-
     .download-btn:hover, .jump-btn:hover {
       transform: scale(1.1);
     }
-
     @media (max-width: 480px) {
       .container {
         padding: 24px 16px;
       }
-
       .card {
         padding: 18px;
       }
-
       .header h1 {
         font-size: 24px;
       }
@@ -154,10 +136,10 @@
     </div>
     <div class="card">
       <div class="content">
-        <h2>mc</h2>
-        <p>免费下载，下载请点第二个</p>
+        <h2>这是文章标题</h2>
+        <p>这是简介。。。</p>
       </div>
-      <button class="jump-btn" data-link="https://bbk.endyun.ltd/download"></button>
+      <button class="jump-btn" data-link="https://www.example.com"></button>
     </div>
     <div class="card">
       <div class="content">
@@ -180,7 +162,6 @@
         document.body.removeChild(a);
       });
     });
-
     document.querySelectorAll('.jump-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const link = this.getAttribute('data-link');
