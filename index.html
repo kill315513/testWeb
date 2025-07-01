@@ -102,7 +102,18 @@
       transition: transform 0.2s;
     }
 
-    .download-btn:hover {
+    .jump-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      background: transparent url('跳转.pug') no-repeat center center;
+      background-size: cover;
+      transition: transform 0.2s;
+    }
+
+    .download-btn:hover, .jump-btn:hover {
       transform: scale(1.1);
     }
 
@@ -143,10 +154,10 @@
     </div>
     <div class="card">
       <div class="content">
-        <h2>这是文章标题</h2>
-        <p>这是简介。。。</p>
+        <h2>mc</h2>
+        <p>免费下载，下载请点第二个</p>
       </div>
-      <button class="download-btn" data-file="文件2.zip"></button>
+      <button class="jump-btn" data-link="https://bbk.endyun.ltd/download"></button>
     </div>
     <div class="card">
       <div class="content">
@@ -169,7 +180,15 @@
         document.body.removeChild(a);
       });
     });
+
+    document.querySelectorAll('.jump-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const link = this.getAttribute('data-link');
+        if(link) {
+          window.open(link, '_blank');
+        }
+      });
+    });
   </script>
 </body>
-
 </html>
