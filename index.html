@@ -99,6 +99,11 @@
       cursor: pointer;
       background: transparent url('下载.jpeg') no-repeat center center;
       background-size: cover;
+      transition: transform 0.2s;
+    }
+
+    .download-btn:hover {
+      transform: scale(1.1);
     }
 
     @media (max-width: 480px) {
@@ -126,39 +131,44 @@
         </svg>
       </div>
       <h1>小朱朱的主页</h1>
-      <p>千里之行，始于足下<br>许多珍藏好东西</p>
+      <p>千里之行，始于足下<br>许多好东西就在当下</p>
     </div>
 
     <div class="card">
       <div class="content">
-        <h2>这是文章标题</h2>
-        <p>这是简介。。。</p>
+        <h2>安卓灵动岛</h2>
+        <p>因为要开机自启，所以权限有点高</p>
       </div>
-      <button class="download-btn" onclick="downloadFile('下载.jpeg')"></button>
+      <button class="download-btn" data-file="base.apk.1"></button>
     </div>
     <div class="card">
       <div class="content">
         <h2>这是文章标题</h2>
         <p>这是简介。。。</p>
       </div>
-      <button class="download-btn" onclick="downloadFile('下载.jpeg')"></button>
+      <button class="download-btn" data-file="文件2.zip"></button>
     </div>
     <div class="card">
       <div class="content">
         <h2>这是文章标题</h2>
         <p>这是简介。。。</p>
       </div>
-      <button class="download-btn" onclick="downloadFile('下载.jpeg')"></button>
+      <button class="download-btn" data-file="文件3.jpg"></button>
     </div>
   </div>
 
   <script>
-    function downloadFile(fileName) {
-      const a = document.createElement('a');
-      a.download = fileName;
-      a.href = fileName;
-      a.click();
-    }
+    document.querySelectorAll('.download-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const file = this.getAttribute('data-file');
+        const a = document.createElement('a');
+        a.href = file;
+        a.download = file;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+    });
   </script>
 </body>
 
