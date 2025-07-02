@@ -40,42 +40,7 @@
 
     @media (min-width: 768px) {
       .container {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: auto auto auto;
-        grid-template-areas:
-          "header header"
-          "categories categories"
-          "card1 card2"
-          "card3 card4"
-          "card5 card6";
-      }
-      
-      .header {
-        grid-area: header;
-      }
-      
-      .categories {
-        grid-area: categories;
-      }
-      
-      .card:nth-child(3) {
-        grid-area: card1;
-      }
-      
-      .card:nth-child(4) {
-        grid-area: card2;
-      }
-      
-      .card:nth-child(5) {
-        grid-area: card3;
-      }
-      
-      .card:nth-child(6) {
-        grid-area: card4;
-      }
-      
-      .card:nth-child(7) {
-        grid-area: card5;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
       }
     }
 
@@ -87,6 +52,7 @@
       margin-bottom: 0;
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
       transition: all 0.4s ease;
+      grid-column: 1 / -1;
     }
 
     .header:hover {
@@ -100,6 +66,7 @@
       gap: 15px;
       margin-bottom: 20px;
       flex-wrap: wrap;
+      grid-column: 1 / -1;
     }
 
     .category-btn {
@@ -623,8 +590,8 @@
         <h2>更新日志 v1.4</h2>
         <p>最新改进和功能增强，持续优化用户体验。</p>
         <ul>
-          <li>修复:网站没反应</li>
-          <li>优化:完善有些不见的东西</li>
+          <li>修复:电脑分区横屏排列出错</li>
+          <li>优化:黄昏模式点缀更改</li>
         </ul>
       </div>
     </div>
@@ -774,7 +741,7 @@
       document.documentElement.style.setProperty('--card-color', '#FFFFFF');
       document.documentElement.style.setProperty('--text-color', '#1A1A1A');
       document.documentElement.style.setProperty('--secondary-color', '#666666');
-      document.documentElement.style.setProperty('--highlight-color', '#2F88FF');
+      document.documentElement.style.setProperty('--highlight-color', '#4A90E2');
     }
 
     function applySunsetTheme() {
@@ -782,7 +749,7 @@
       document.documentElement.style.setProperty('--card-color', '#FFE8B5');
       document.documentElement.style.setProperty('--text-color', '#4B3B2A');
       document.documentElement.style.setProperty('--secondary-color', '#6E5E4B');
-      document.documentElement.style.setProperty('--highlight-color', '#2F88FF');
+      document.documentElement.style.setProperty('--highlight-color', '#FF8C42');
     }
 
     function applyNightTheme() {
