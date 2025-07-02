@@ -27,7 +27,7 @@
       line-height: 1.6;
       min-height: 100vh;
       padding: 20px;
-      transition: background-color 0.5s ease;
+      transition: all 0.5s ease;
     }
 
     .container {
@@ -135,6 +135,7 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 4px 10px rgba(47, 136, 255, 0.3);
+      cursor: pointer;
     }
 
     .logo svg {
@@ -147,7 +148,7 @@
       font-size: 36px;
       font-weight: 700;
       margin-bottom: 10px;
-      background: linear-gradient(90deg, var(--highlight-color), #FF6B6B);
+      background: linear-gradient(90deg, #2F88FF, #4CAF50);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -317,6 +318,7 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
       display: flex;
       align-items: center;
+      cursor: pointer;
     }
 
     .theme-icon {
@@ -325,6 +327,46 @@
       border-radius: 50%;
       background: var(--highlight-color);
       margin-right: 10px;
+    }
+
+    .theme-selector {
+      position: fixed;
+      bottom: 80px;
+      right: 25px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 15px;
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 100;
+      transform: translateY(100%);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .theme-selector.show {
+      display: flex;
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .theme-option {
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .theme-option:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .theme-option.active {
+      background: var(--highlight-color);
     }
 
     @media (max-width: 767px) {
@@ -362,6 +404,11 @@
         bottom: 15px;
         right: 15px;
         font-size: 14px;
+      }
+      
+      .theme-selector {
+        bottom: 70px;
+        right: 15px;
       }
     }
 
@@ -404,10 +451,70 @@
         <button class="download-btn" data-file="base.apk.1"></button>
       </div>
     </div>
+    
+    <div class="card" data-category="android">
+      <div class="content">
+        <h2>手机MC国际版</h2>
+        <p>免费获取Minecraft国际版，体验最纯粹的游戏乐趣。包含最新版本和所有功能。</p>
+        <ul>
+          <li>支持多人游戏</li>
+          <li>模组和资源包兼容</li>
+          <li>无广告纯净体验</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="jump-btn" data-link="https://bbk.endyun.ltd/download"></button>
+      </div>
+    </div>
+    
+    <div class="card" data-category="android">
+      <div class="content">
+        <h2>MC手机启动器(JAVA)</h2>
+        <p>免费，无需正版登录，无广告。</p>
+        <ul>
+          <li>可不用买正版</li>
+          <li>需要自己装模组</li>
+          <li>可联机</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="jump-btn" data-link="https://fcl-team.github.io/pages/download.html"></button>
+      </div>
+    </div>
+    
+    <div class="card" data-category="pc">
+      <div class="content">
+        <h2>MC电脑启动器(JAVA)</h2>
+        <p>免费，无需正版登录，无广告中文版</p>
+        <ul>
+          <li>可不用买正版</li>
+          <li>模组较多</li>
+          <li>可以联机</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="jump-btn" data-link="https://bbsmc.net/software/pcl"></button>
+      </div>
+    </div>
+    
+    <div class="card" data-category="pc">
+      <div class="content">
+        <h2>MC电脑启动器(JAVA)</h2>
+        <p>免费，无需正版登录，无广告英文版</p>
+        <ul>
+          <li>可不用买正版</li>
+          <li>大多模组都有</li>
+          <li>可以联机</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="jump-btn" data-link="https://modrinth.com/app"></button>
+      </div>
+    </div>
 
     <div class="card" data-category="mc">
       <div class="content">
-        <h2>MC国际版</h2>
+        <h2>手机MC国际版</h2>
         <p>免费获取Minecraft国际版，体验最纯粹的游戏乐趣。包含最新版本和所有功能。</p>
         <ul>
           <li>支持多人游戏</li>
@@ -435,6 +542,66 @@
       </div>
     </div>
 
+    <div class="card" data-category="mc">
+      <div class="content">
+        <h2>模组下载</h2>
+        <p>提供Minecraft JAVA模组下载资源，丰富您的游戏体验。</p>
+        <ul>
+          <li>热门模组推荐</li>
+          <li>最新模组更新</li>
+          <li>所有版本支持</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="jump-btn" data-link="https://modrinth.com/mods"></button>
+      </div>
+    </div>
+    
+    <div class="card" data-category="mc">
+      <div class="content">
+        <h2>MC手机启动器(JAVA)</h2>
+        <p>免费，无需正版登录，无广告。</p>
+        <ul>
+          <li>可不用买正版</li>
+          <li>需要自己装模组</li>
+          <li>可联机</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="jump-btn" data-link="https://fcl-team.github.io/pages/download.html"></button>
+      </div>
+    </div>
+    
+    <div class="card" data-category="mc">
+      <div class="content">
+        <h2>MC电脑启动器(JAVA)</h2>
+        <p>免费，无需正版登录，无广告中文版</p>
+        <ul>
+          <li>可不用买正版</li>
+          <li>模组较多</li>
+          <li>可以联机</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="jump-btn" data-link="https://bbsmc.net/software/pcl"></button>
+      </div>
+    </div>
+    
+    <div class="card" data-category="mc">
+      <div class="content">
+        <h2>MC电脑启动器(JAVA)</h2>
+        <p>免费，无需正版登录，无广告英文版</p>
+        <ul>
+          <li>可不用买正版</li>
+          <li>大多模组都有</li>
+          <li>可以联机</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="jump-btn" data-link="https://modrinth.com/app"></button>
+      </div>
+    </div>
+    
     <div class="card" data-category="other">
       <div class="content">
         <h2>网站代码参考</h2>
@@ -453,11 +620,12 @@
 
     <div class="card">
       <div class="content">
-        <h2>更新日志 v1.2</h2>
+        <h2>更新日志 v1.3</h2>
         <p>最新改进和功能增强，持续优化用户体验。</p>
         <ul>
-          <li>新增：MC分类</li>
-          <li>修复：移动端显示问题</li>
+          <li>自选:可选择 白天/黄昏/夜晚/自动</li>
+          <li>添加:电脑启动器</li>
+          <li>优化:完善有些不见的东西</li>
         </ul>
       </div>
     </div>
@@ -466,6 +634,13 @@
   <div class="theme-info">
     <div class="theme-icon"></div>
     <span id="theme-name">当前主题：夜间模式</span>
+  </div>
+
+  <div class="theme-selector">
+    <div class="theme-option" data-theme="auto">自动模式</div>
+    <div class="theme-option" data-theme="day">白天模式</div>
+    <div class="theme-option" data-theme="sunset">黄昏模式</div>
+    <div class="theme-option" data-theme="night">夜间模式</div>
   </div>
 
   <script>
@@ -526,28 +701,85 @@
       });
     });
 
-    (function() {
+    const themeSelector = document.querySelector('.theme-selector');
+    const themeOptions = document.querySelectorAll('.theme-option');
+    const themeName = document.getElementById('theme-name');
+    const logo = document.querySelector('.logo');
+    
+    let clickCount = 0;
+    let lastClickTime = 0;
+    
+    logo.addEventListener('click', () => {
+      const now = Date.now();
+      if (now - lastClickTime > 1000) clickCount = 0;
+      clickCount++;
+      lastClickTime = now;
+      
+      if (clickCount >= 3) {
+        toggleThemeSelector();
+        clickCount = 0;
+      }
+    });
+
+    function toggleThemeSelector() {
+      themeSelector.classList.toggle('show');
+    }
+
+    function setTheme(theme) {
+      localStorage.setItem('selectedTheme', theme);
+      
+      if (theme === 'auto') {
+        applyAutoTheme();
+      } else {
+        applyManualTheme(theme);
+      }
+      
+      themeOptions.forEach(opt => {
+        opt.classList.toggle('active', opt.dataset.theme === theme);
+      });
+    }
+
+    function applyAutoTheme() {
       const hour = new Date().getHours();
-      const themeName = document.getElementById('theme-name');
       
       if (hour >= 6 && hour < 17) {
-        document.documentElement.style.setProperty('--bg-color', '#F6F6F6');
-        document.documentElement.style.setProperty('--card-color', '#FFFFFF');
-        document.documentElement.style.setProperty('--text-color', '#1A1A1A');
-        document.documentElement.style.setProperty('--secondary-color', '#666666');
-        document.documentElement.style.setProperty('--highlight-color', '#2F88FF');
-        themeName.textContent = '日间模式';
+        applyDayTheme();
       } else if (hour >= 17 && hour < 19) {
-        document.documentElement.style.setProperty('--bg-color', '#FFD580');
-        document.documentElement.style.setProperty('--card-color', '#FFE8B5');
-        document.documentElement.style.setProperty('--text-color', '#4B3B2A');
-        document.documentElement.style.setProperty('--secondary-color', '#6E5E4B');
-        document.documentElement.style.setProperty('--highlight-color', '#FF6B6B');
-        themeName.textContent = '黄昏模式';
+        applySunsetTheme();
       } else {
-        themeName.textContent = '夜间模式';
+        applyNightTheme();
       }
-    })();
-  </script>
-</body>
-</html>
+      
+      themeName.textContent = '自动模式';
+    }
+
+    function applyManualTheme(theme) {
+      switch(theme) {
+        case 'day':
+          applyDayTheme();
+          themeName.textContent = '白天模式';
+          break;
+        case 'sunset':
+          applySunsetTheme();
+          themeName.textContent = '黄昏模式';
+          break;
+        case 'night':
+          applyNightTheme();
+          themeName.textContent = '夜间模式';
+          break;
+      }
+    }
+
+    function applyDayTheme() {
+      document.documentElement.style.setProperty('--bg-color', '#F6F6F6');
+      document.documentElement.style.setProperty('--card-color', '#FFFFFF');
+      document.documentElement.style.setProperty('--text-color', '#1A1A1A');
+      document.documentElement.style.setProperty('--secondary-color', '#666666');
+      document.documentElement.style.setProperty('--highlight-color', '#2F88FF');
+    }
+
+    function applySunsetTheme() {
+      document.documentElement.style.setProperty('--bg-color', '#FFD580');
+      document.documentElement.style.setProperty('--card-color', '#FFE8B5');
+      document.documentElement.style.setProperty('--text-color', '#4B3B2A');
+      document.documentElement.style.setProperty('--secon
