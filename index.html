@@ -41,31 +41,41 @@
     @media (min-width: 768px) {
       .container {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: auto auto;
+        grid-template-rows: auto auto auto;
         grid-template-areas:
           "header header"
+          "categories categories"
           "card1 card2"
-          "card3 card4";
+          "card3 card4"
+          "card5 card6";
       }
       
       .header {
         grid-area: header;
       }
       
-      .card:nth-child(1) {
-        grid-area: card1;
-      }
-      
-      .card:nth-child(2) {
-        grid-area: card2;
+      .categories {
+        grid-area: categories;
       }
       
       .card:nth-child(3) {
-        grid-area: card3;
+        grid-area: card1;
       }
       
       .card:nth-child(4) {
+        grid-area: card2;
+      }
+      
+      .card:nth-child(5) {
+        grid-area: card3;
+      }
+      
+      .card:nth-child(6) {
         grid-area: card4;
+      }
+      
+      .card:nth-child(7) {
+        grid-area: card5;
       }
     }
 
@@ -82,6 +92,37 @@
     .header:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .category-btn {
+      padding: 12px 24px;
+      background-color: var(--card-color);
+      border: none;
+      border-radius: 12px;
+      color: var(--text-color);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-btn:hover {
+      transform: translateY(-3px);
+      background-color: var(--highlight-color);
+      box-shadow: 0 6px 12px rgba(47, 136, 255, 0.2);
+    }
+
+    .category-btn.active {
+      background-color: var(--highlight-color);
     }
 
     .logo {
@@ -323,6 +364,10 @@
         font-size: 14px;
       }
     }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -337,7 +382,14 @@
       <p>千里之行，始于足下 • 许多好东西就在当下 • 用心创造每一份作品</p>
     </div>
 
-    <div class="card">
+    <div class="categories">
+      <button class="category-btn active" data-category="all">全部</button>
+      <button class="category-btn" data-category="android">安卓</button>
+      <button class="category-btn" data-category="pc">电脑</button>
+      <button class="category-btn" data-category="other">其他</button>
+    </div>
+
+    <div class="card" data-category="android">
       <div class="content">
         <h2>安卓灵动岛</h2>
         <p>一款创新的安卓交互体验工具，提供类似iPhone的灵动岛功能，提升您的手机使用体验。</p>
@@ -352,7 +404,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" data-category="other" data-subcategory="mc">
       <div class="content">
         <h2>MC国际版</h2>
         <p>免费获取Minecraft国际版，体验最纯粹的游戏乐趣。包含最新版本和所有功能。</p>
@@ -367,14 +419,14 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" data-category="other">
       <div class="content">
         <h2>网站代码参考</h2>
-        <p>本网站的代码，可以拿去参考</p>
+        <p>学习前端开发的实用资源，包含HTML、CSS和JavaScript代码示例及最佳实践。</p>
         <ul>
-          <li>网站使用的是github</li>
-          <li>许多使用AI</li>
-          <li>有豆包、DeepSeek、ChatGPT</li>
+          <li>响应式布局实现</li>
+          <li>主题切换功能</li>
+          <li>动画效果示例</li>
           <li>GitHub代码仓库</li>
         </ul>
       </div>
@@ -385,14 +437,10 @@
 
     <div class="card">
       <div class="content">
-        <h2>更新日志 v1.0</h2>
+        <h2>更新日志 v1.1</h2>
         <p>最新改进和功能增强，持续优化用户体验。</p>
         <ul>
-          <li>新增：电脑版田字格布局</li>
-          <li>优化：主题自适应文字颜色</li>
-          <li>改进：按钮动画效果</li>
-          <li>修复：移动端显示问题</li>
-          <li>增强：卡片悬停效果</li>
+          <li>新增:分类</li>
         </ul>
       </div>
     </div>
@@ -436,6 +484,26 @@
           const link = this.getAttribute('data-link');
           if (link) {
             window.open(link, '_blank');
+          }
+        });
+      });
+    });
+
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.category-btn').forEach(b => {
+          b.classList.remove('active');
+        });
+        this.classList.add('active');
+        
+        const category = this.getAttribute('data-category');
+        document.querySelectorAll('.card').forEach(card => {
+          if (card.getAttribute('data-category')) {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
           }
         });
       });
