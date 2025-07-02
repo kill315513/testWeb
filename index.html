@@ -620,11 +620,10 @@
 
     <div class="card">
       <div class="content">
-        <h2>更新日志 v1.3</h2>
+        <h2>更新日志 v1.4</h2>
         <p>最新改进和功能增强，持续优化用户体验。</p>
         <ul>
-          <li>自选:可选择 白天/黄昏/夜晚/自动</li>
-          <li>添加:电脑启动器</li>
+          <li>修复:网站没反应</li>
           <li>优化:完善有些不见的东西</li>
         </ul>
       </div>
@@ -782,4 +781,29 @@
       document.documentElement.style.setProperty('--bg-color', '#FFD580');
       document.documentElement.style.setProperty('--card-color', '#FFE8B5');
       document.documentElement.style.setProperty('--text-color', '#4B3B2A');
-      document.documentElement.style.setProperty('--secon
+      document.documentElement.style.setProperty('--secondary-color', '#6E5E4B');
+      document.documentElement.style.setProperty('--highlight-color', '#2F88FF');
+    }
+
+    function applyNightTheme() {
+      document.documentElement.style.setProperty('--bg-color', '#1F2329');
+      document.documentElement.style.setProperty('--card-color', '#2B2F36');
+      document.documentElement.style.setProperty('--text-color', '#FFFFFF');
+      document.documentElement.style.setProperty('--secondary-color', '#B0B3B8');
+      document.documentElement.style.setProperty('--highlight-color', '#2F88FF');
+    }
+
+    const savedTheme = localStorage.getItem('selectedTheme') || 'auto';
+    setTheme(savedTheme);
+
+    themeOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        setTheme(option.dataset.theme);
+        toggleThemeSelector();
+      });
+    });
+
+    document.querySelector('.theme-info').addEventListener('click', toggleThemeSelector);
+  </script>
+</body>
+</html>
