@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +11,13 @@
       --text-color: #FFFFFF;
       --secondary-color: #B0B3B8;
       --highlight-color: #2F88FF;
+      --accent-color: #4CAF50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
@@ -19,103 +25,188 @@
       background-color: var(--bg-color);
       color: var(--text-color);
       line-height: 1.6;
-      margin: 0;
-      padding: 0;
+      min-height: 100vh;
+      padding: 20px;
+      transition: background-color 0.5s ease;
     }
 
     .container {
-      max-width: 560px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto auto;
+        grid-template-areas:
+          "header header"
+          "card1 card2"
+          "card3 card4";
+      }
+      
+      .header {
+        grid-area: header;
+      }
+      
+      .card:nth-child(1) {
+        grid-area: card1;
+      }
+      
+      .card:nth-child(2) {
+        grid-area: card2;
+      }
+      
+      .card:nth-child(3) {
+        grid-area: card3;
+      }
+      
+      .card:nth-child(4) {
+        grid-area: card4;
+      }
     }
 
     .header {
       text-align: center;
-      margin-bottom: 36px;
+      padding: 30px;
+      background-color: var(--card-color);
+      border-radius: 16px;
+      margin-bottom: 0;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.4s ease;
+    }
+
+    .header:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     }
 
     .logo {
-      width: 64px;
-      height: 64px;
+      width: 90px;
+      height: 90px;
       background: var(--highlight-color);
-      border-radius: 16px;
+      border-radius: 20px;
       margin: 0 auto 20px;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 4px 10px rgba(47, 136, 255, 0.3);
     }
 
     .logo svg {
-      width: 32px;
-      height: 32px;
+      width: 45px;
+      height: 45px;
       fill: #FFFFFF;
     }
 
     h1 {
-      font-size: 28px;
-      font-weight: 600;
-      margin-bottom: 8px;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, var(--highlight-color), #FF6B6B);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .header p {
-      font-size: 14px;
-      color: #CFD2D6;
-      line-height: 1.4;
+      font-size: 18px;
+      color: var(--secondary-color);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     .card {
       background-color: var(--card-color);
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 20px;
+      border-radius: 16px;
+      padding: 30px;
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      align-items: center;
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
+      height: 100%;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--highlight-color);
     }
 
     .card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-8px);
       background-color: #343A42;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
     }
 
     .card .content {
       flex: 1;
+      margin-bottom: 25px;
     }
 
     .card h2 {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 8px;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--text-color);
     }
 
     .card p {
-      font-size: 14px;
+      font-size: 17px;
       color: var(--secondary-color);
+      line-height: 1.6;
     }
 
     .card ul {
-      padding-left: 20px;
+      padding-left: 25px;
       color: var(--secondary-color);
-      font-size: 14px;
+      font-size: 17px;
+      margin-top: 15px;
     }
 
     .card ul li {
-      margin-bottom: 6px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .card ul li::before {
+      content: "•";
+      color: var(--highlight-color);
+      position: absolute;
+      left: -15px;
+      font-size: 20px;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: flex-end;
     }
 
     .download-btn,
     .jump-btn {
-      width: 36px;
-      height: 36px;
+      width: 55px;
+      height: 55px;
       border: none;
       outline: none;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
       background-color: transparent;
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .download-btn::before,
@@ -126,22 +217,26 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-size: contain;
+      background-size: 60%;
       background-repeat: no-repeat;
       background-position: center;
+      transition: transform 0.3s ease;
     }
 
     .download-btn::before {
-      background-image: url('下载.jpeg');
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>');
+      background-color: var(--highlight-color);
     }
 
     .jump-btn::before {
-      background-image: url('跳转.png');
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>');
+      background-color: var(--accent-color);
     }
 
     .download-btn:hover,
     .jump-btn:hover {
-      transform: scale(1.1);
+      transform: scale(1.15) rotate(10deg);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
 
     @keyframes flyAndSpin {
@@ -149,9 +244,8 @@
         transform: translate(0, 0) rotate(0deg) scale(1);
         opacity: 1;
       }
-
       100% {
-        transform: translate(100px, -100px) rotate(720deg) scale(0.5);
+        transform: translate(150px, -150px) rotate(720deg) scale(0.3);
         opacity: 0;
       }
     }
@@ -159,31 +253,78 @@
     .animate-fly {
       position: fixed;
       pointer-events: none;
-      animation: flyAndSpin 1s ease-out forwards;
+      animation: flyAndSpin 1.2s ease-out forwards;
       z-index: 1000;
-      width: 36px;
-      height: 36px;
-      background-size: contain;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background-size: 60%;
       background-repeat: no-repeat;
       background-position: center;
     }
 
-    @media (max-width: 480px) {
+    .theme-info {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 15px;
+      backdrop-filter: blur(12px);
+      color: var(--text-color);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+    }
+
+    .theme-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--highlight-color);
+      margin-right: 10px;
+    }
+
+    @media (max-width: 767px) {
       .container {
-        padding: 24px 16px;
+        padding: 0 10px;
+        gap: 15px;
       }
-
+      
       .card {
-        padding: 18px;
+        padding: 25px;
       }
-
+      
       h1 {
-        font-size: 24px;
+        font-size: 30px;
+      }
+      
+      .header p {
+        font-size: 16px;
+      }
+      
+      .card h2 {
+        font-size: 22px;
+      }
+      
+      .card p, .card ul {
+        font-size: 16px;
+      }
+      
+      .download-btn, .jump-btn {
+        width: 50px;
+        height: 50px;
+      }
+      
+      .theme-info {
+        bottom: 15px;
+        right: 15px;
+        font-size: 14px;
       }
     }
   </style>
 </head>
-
 <body>
   <div class="container">
     <div class="header">
@@ -193,48 +334,77 @@
         </svg>
       </div>
       <h1>小朱朱的主页</h1>
-      <p>千里之行，始于足下<br>许多好东西就在当下</p>
+      <p>千里之行，始于足下 • 许多好东西就在当下 • 用心创造每一份作品</p>
     </div>
 
     <div class="card">
       <div class="content">
         <h2>安卓灵动岛</h2>
-        <p>因为要开机自启，所以权限有点高</p>
+        <p>一款创新的安卓交互体验工具，提供类似iPhone的灵动岛功能，提升您的手机使用体验。</p>
+        <ul>
+          <li>支持自定义通知样式</li>
+          <li>多种主题可供选择</li>
+          <li>低耗电设计</li>
+        </ul>
       </div>
-      <button class="download-btn" data-file="base.apk.1"></button>
+      <div class="card-footer">
+        <button class="download-btn" data-file="base.apk.1"></button>
+      </div>
     </div>
 
     <div class="card">
       <div class="content">
         <h2>MC国际版</h2>
-        <p>免费的，下载请点第二个</p>
-      </div>
-      <button class="jump-btn" data-link="https://bbk.endyun.ltd/download"></button>
-    </div>
-
-    <div class="card">
-      <div class="content">
-        <h2>这是文章标题</h2>
-        <p>这是简介。。。</p>
-      </div>
-      <button class="download-btn" data-file="文件3.jpg"></button>
-    </div>
-
-    <div class="card">
-      <div class="content">
-        <h2>更新日志 1.1</h2>
+        <p>免费获取Minecraft国际版，体验最纯粹的游戏乐趣。包含最新版本和所有功能。</p>
         <ul>
-          <li>修复了bug</li>
-          <li>增加了检测时间修改背景</li>
-          <li>兼容电脑版</li>
+          <li>支持多人游戏</li>
+          <li>模组和资源包兼容</li>
+          <li>无广告纯净体验</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="jump-btn" data-link="https://bbk.endyun.ltd/download"></button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="content">
+        <h2>创意设计素材</h2>
+        <p>精心收集的设计资源库，包含UI套件、图标集和模板，助力您的创作之旅。</p>
+        <ul>
+          <li>500+ UI组件</li>
+          <li>2000+矢量图标</li>
+          <li>响应式模板</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="download-btn" data-file="design_resources.zip"></button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="content">
+        <h2>更新日志 v1.0</h2>
+        <p>最新改进和功能增强，持续优化用户体验。</p>
+        <ul>
+          <li>新增：电脑版田字格布局</li>
+          <li>优化：主题自适应文字颜色</li>
+          <li>改进：按钮动画效果</li>
+          <li>修复：移动端显示问题</li>
+          <li>增强：卡片悬停效果</li>
         </ul>
       </div>
     </div>
   </div>
 
+  <div class="theme-info">
+    <div class="theme-icon"></div>
+    <span id="theme-name">当前主题：夜间模式</span>
+  </div>
+
   <script>
     document.querySelectorAll('.download-btn').forEach(btn => {
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', function() {
         const file = this.getAttribute('data-file');
         const a = document.createElement('a');
         a.href = file;
@@ -246,16 +416,20 @@
     });
 
     document.querySelectorAll('.jump-btn').forEach(btn => {
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', function() {
         const icon = document.createElement('div');
         icon.className = 'animate-fly';
         const rect = this.getBoundingClientRect();
         icon.style.width = rect.width + 'px';
         icon.style.height = rect.height + 'px';
-        icon.style.backgroundImage = window.getComputedStyle(this, '::before').backgroundImage;
+        icon.style.background = window.getComputedStyle(this).background;
+        icon.style.backgroundSize = '60%';
+        icon.style.backgroundRepeat = 'no-repeat';
+        icon.style.backgroundPosition = 'center';
         icon.style.left = rect.left + 'px';
         icon.style.top = rect.top + 'px';
         document.body.appendChild(icon);
+        
         icon.addEventListener('animationend', () => {
           icon.remove();
           const link = this.getAttribute('data-link');
@@ -266,18 +440,26 @@
       });
     });
 
-    (function () {
+    (function() {
       const hour = new Date().getHours();
+      const themeName = document.getElementById('theme-name');
+      
       if (hour >= 6 && hour < 17) {
         document.documentElement.style.setProperty('--bg-color', '#F6F6F6');
         document.documentElement.style.setProperty('--card-color', '#FFFFFF');
         document.documentElement.style.setProperty('--text-color', '#1A1A1A');
         document.documentElement.style.setProperty('--secondary-color', '#666666');
+        document.documentElement.style.setProperty('--highlight-color', '#2F88FF');
+        themeName.textContent = '日间模式';
       } else if (hour >= 17 && hour < 19) {
         document.documentElement.style.setProperty('--bg-color', '#FFD580');
         document.documentElement.style.setProperty('--card-color', '#FFE8B5');
         document.documentElement.style.setProperty('--text-color', '#4B3B2A');
         document.documentElement.style.setProperty('--secondary-color', '#6E5E4B');
+        document.documentElement.style.setProperty('--highlight-color', '#FF6B6B');
+        themeName.textContent = '黄昏模式';
+      } else {
+        themeName.textContent = '夜间模式';
       }
     })();
   </script>
