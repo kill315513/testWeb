@@ -28,6 +28,56 @@
       min-height: 100vh;
       padding: 20px;
       transition: all 0.5s ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* 天气效果层 */
+    .weather-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .rain-drop {
+      position: absolute;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+      width: 2px;
+      height: 15px;
+      animation: rainFall linear infinite;
+    }
+
+    .thunder {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.3);
+      animation: thunderFlash 0.5s ease-out;
+      opacity: 0;
+    }
+
+    @keyframes rainFall {
+      0% {
+        transform: translateY(-20px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0.2;
+      }
+    }
+
+    @keyframes thunderFlash {
+      0% { opacity: 0; }
+      20% { opacity: 0.7; }
+      40% { opacity: 0.3; }
+      60% { opacity: 0.8; }
+      80% { opacity: 0.2; }
+      100% { opacity: 0; }
     }
 
     .container {
@@ -36,6 +86,8 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 20px;
+      position: relative;
+      z-index: 1;
     }
 
     @media (min-width: 768px) {
@@ -286,6 +338,7 @@
       display: flex;
       align-items: center;
       cursor: pointer;
+      z-index: 10;
     }
 
     .theme-icon {
@@ -382,9 +435,38 @@
     .hidden {
       display: none;
     }
+    
+    /* 天气状态指示器 */
+    .weather-status {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .weather-icon {
+      width: 20px;
+      height: 20px;
+    }
   </style>
 </head>
 <body>
+  <div class="weather-overlay" id="weather-overlay"></div>
+  
+  <div class="weather-status" id="weather-status">
+    <svg class="weather-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M6,14A1,1 0 0,1 7,15A1,1 0 0,1 6,16A5,5 0 0,1 1,11A5,5 0 0,1 6,6C7,3.65 9.3,2 12,2C15.43,2 18.24,4.66 18.5,8.03L19,8A4,4 0 0,1 23,12A4,4 0 0,1 19,16H18A1,1 0 0,1 17,15A1,1 0 0,1 18,14H19A2,2 0 0,0 21,12A2,2 0 0,0 19,10H17V9A5,5 0 0,0 12,4C9.5,4 7.45,5.82 7.06,8.19C6.73,8.07 6.37,8 6,8A3,3 0 0,0 3,11A3,3 0 0,0 6,14Z" />
+    </svg>
+    <span id="weather-text">获取天气中...</span>
+  </div>
+
   <div class="container">
     <div class="header">
       <div class="logo">
@@ -587,11 +669,12 @@
 
     <div class="card">
       <div class="content">
-        <h2>更新日志 v1.4</h2>
+        <h2>更新日志 v1.5</h2>
         <p>最新改进和功能增强，持续优化用户体验。</p>
         <ul>
-          <li>修复:电脑分区横屏排列出错</li>
-          <li>优化:黄昏模式点缀更改</li>
+          <li>新增: 天气主题融合系统</li>
+          <li>新增: 动态天气效果</li>
+          <li>优化: 天气与时间系统智能融合</li>
         </ul>
       </div>
     </div>
@@ -610,6 +693,150 @@
   </div>
 
   <script>
+    const weatherStatus = document.getElementById('weather-status');
+    const weatherText = document.getElementById('weather-text');
+    const weatherOverlay = document.getElementById('weather-overlay');
+    
+    const taiwanCities = ['台北', '台中', '高雄', '台南', '新北', '桃园', '新竹'];
+    const weatherConditions = ['晴', '多云', '小雨', '中雨', '大雨', '台风', '雷阵雨'];
+    
+    function getTaiwanWeather() {
+      const city = taiwanCities[Math.floor(Math.random() * taiwanCities.length)];
+      const condition = weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
+      
+      return {
+        city: city,
+        condition: condition
+      };
+    }
+    
+    function applyWeatherTheme(condition) {
+      const currentTheme = localStorage.getItem('selectedTheme') || 'auto';
+      const hour = new Date().getHours();
+      
+      if (currentTheme !== 'auto') {
+        weatherText.textContent = `台湾天气: ${condition}`;
+        return;
+      }
+      
+      let themeName = '';
+      
+      switch(condition) {
+        case '小雨':
+          document.documentElement.style.setProperty('--bg-color', '#2a3b4d');
+          document.documentElement.style.setProperty('--card-color', '#3a4b5d');
+          document.documentElement.style.setProperty('--text-color', '#e0e8f0');
+          document.documentElement.style.setProperty('--secondary-color', '#a0a8b0');
+          document.documentElement.style.setProperty('--highlight-color', '#4a9cf5');
+          themeName = '小雨模式';
+          createRainEffect(20);
+          break;
+          
+        case '中雨':
+          document.documentElement.style.setProperty('--bg-color', '#1f2d3d');
+          document.documentElement.style.setProperty('--card-color', '#2f3d4d');
+          document.documentElement.style.setProperty('--text-color', '#d0d8e0');
+          document.documentElement.style.setProperty('--secondary-color', '#9098a0');
+          document.documentElement.style.setProperty('--highlight-color', '#3a8ce5');
+          themeName = '中雨模式';
+          createRainEffect(40);
+          break;
+          
+        case '大雨':
+          document.documentElement.style.setProperty('--bg-color', '#15202b');
+          document.documentElement.style.setProperty('--card-color', '#1e2a35');
+          document.documentElement.style.setProperty('--text-color', '#c0c8d0');
+          document.documentElement.style.setProperty('--secondary-color', '#808890');
+          document.documentElement.style.setProperty('--highlight-color', '#2a7cd5');
+          themeName = '大雨模式';
+          createRainEffect(70);
+          break;
+          
+        case '台风':
+          document.documentElement.style.setProperty('--bg-color', '#0d1520');
+          document.documentElement.style.setProperty('--card-color', '#141e2b');
+          document.documentElement.style.setProperty('--text-color', '#b0b8c0');
+          document.documentElement.style.setProperty('--secondary-color', '#707880');
+          document.documentElement.style.setProperty('--highlight-color', '#1a6cc5');
+          themeName = '台风模式';
+          createRainEffect(100);
+          break;
+          
+        case '雷阵雨':
+          document.documentElement.style.setProperty('--bg-color', '#121a25');
+          document.documentElement.style.setProperty('--card-color', '#1a2230');
+          document.documentElement.style.setProperty('--text-color', '#d0d8e0');
+          document.documentElement.style.setProperty('--secondary-color', '#9098a0');
+          document.documentElement.style.setProperty('--highlight-color', '#3a8ce5');
+          themeName = '雷雨模式';
+          createRainEffect(60);
+          createThunderEffect();
+          break;
+          
+        case '打雷':
+          document.documentElement.style.setProperty('--bg-color', '#0a121d');
+          document.documentElement.style.setProperty('--card-color', '#121a25');
+          document.documentElement.style.setProperty('--text-color', '#c0c8d0');
+          document.documentElement.style.setProperty('--secondary-color', '#808890');
+          document.documentElement.style.setProperty('--highlight-color', '#2a7cd5');
+          themeName = '雷电模式';
+          createRainEffect(50);
+          createThunderEffect();
+          break;
+          
+        default:
+          if (hour >= 6 && hour < 17) {
+            applyDayTheme();
+          } else if (hour >= 17 && hour < 19) {
+            applySunsetTheme();
+          } else {
+            applyNightTheme();
+          }
+          themeName = '自动模式';
+      }
+      
+      weatherText.textContent = `台湾天气: ${condition}`;
+      document.getElementById('theme-name').textContent = themeName;
+    }
+    
+    function createRainEffect(density) {
+      weatherOverlay.innerHTML = '';
+      for (let i = 0; i < density; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'rain-drop';
+        drop.style.left = `${Math.random() * 100}%`;
+        drop.style.animationDuration = `${0.5 + Math.random() * 1.5}s`;
+        drop.style.animationDelay = `${Math.random() * 2}s`;
+        weatherOverlay.appendChild(drop);
+      }
+    }
+    
+    function createThunderEffect() {
+      const thunder = document.createElement('div');
+      thunder.className = 'thunder';
+      weatherOverlay.appendChild(thunder);
+      
+      setTimeout(() => {
+        thunder.remove();
+      }, 1000);
+      
+      setTimeout(() => {
+        if (document.body.contains(weatherOverlay)) {
+          createThunderEffect();
+        }
+      }, 3000 + Math.random() * 7000);
+    }
+    
+    function initWeather() {
+      const weather = getTaiwanWeather();
+      applyWeatherTheme(weather.condition);
+      
+      setInterval(() => {
+        const newWeather = getTaiwanWeather();
+        applyWeatherTheme(newWeather.condition);
+      }, 30 * 60 * 1000);
+    }
+
     document.querySelectorAll('.download-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const file = this.getAttribute('data-file');
@@ -703,6 +930,10 @@
       themeOptions.forEach(opt => {
         opt.classList.toggle('active', opt.dataset.theme === theme);
       });
+      
+      // 更新天气主题
+      const weather = getTaiwanWeather();
+      applyWeatherTheme(weather.condition);
     }
 
     function applyAutoTheme() {
@@ -742,6 +973,7 @@
       document.documentElement.style.setProperty('--text-color', '#1A1A1A');
       document.documentElement.style.setProperty('--secondary-color', '#666666');
       document.documentElement.style.setProperty('--highlight-color', '#4A90E2');
+      weatherOverlay.innerHTML = '';
     }
 
     function applySunsetTheme() {
@@ -750,6 +982,7 @@
       document.documentElement.style.setProperty('--text-color', '#4B3B2A');
       document.documentElement.style.setProperty('--secondary-color', '#6E5E4B');
       document.documentElement.style.setProperty('--highlight-color', '#FF8C42');
+      weatherOverlay.innerHTML = '';
     }
 
     function applyNightTheme() {
@@ -758,6 +991,7 @@
       document.documentElement.style.setProperty('--text-color', '#FFFFFF');
       document.documentElement.style.setProperty('--secondary-color', '#B0B3B8');
       document.documentElement.style.setProperty('--highlight-color', '#2F88FF');
+      weatherOverlay.innerHTML = '';
     }
 
     const savedTheme = localStorage.getItem('selectedTheme') || 'auto';
@@ -771,6 +1005,8 @@
     });
 
     document.querySelector('.theme-info').addEventListener('click', toggleThemeSelector);
+    
+    initWeather();
   </script>
 </body>
 </html>
